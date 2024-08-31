@@ -8,11 +8,32 @@
 import SwiftUI
 
 struct FilterButton: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    let imageName: String
+    let title: String
+    let action: () -> Void
+    
+    var body: some View{
+        Button(action: {
+            action()
+        }, label: {
+            HStack{
+                Image(imageName)
+                Text(title)
+            }
+            .font(.system(size: 17, weight: .bold))
+            .foregroundColor(Color.layerOne)
+            .padding(7)
+            .frame(
+                width: title.isEmpty ? 38 : 140,
+                height: 38,
+                alignment: .leading
+            )
+            .background(Color.BackgroundOne)
+            .clipShape(.rect(cornerRadius: 10))
+        })
     }
 }
 
 #Preview {
-    FilterButton()
+    FilterButton(imageName: "camera", title: "All", action: {})
 }

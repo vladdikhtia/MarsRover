@@ -13,6 +13,9 @@
 		31A6E5202C8343620065FA14 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31A6E51F2C8343620065FA14 /* Preview Assets.xcassets */; };
 		31A6E5222C8343620065FA14 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A6E5212C8343620065FA14 /* Persistence.swift */; };
 		31A6E5252C8343620065FA14 /* MarsRover.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 31A6E5232C8343620065FA14 /* MarsRover.xcdatamodeld */; };
+		31A6E5302C834B8A0065FA14 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A6E52F2C834B8A0065FA14 /* HomeView.swift */; };
+		31A6E5332C8362B10065FA14 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A6E5322C8362B10065FA14 /* HeaderView.swift */; };
+		31A6E5362C8363960065FA14 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A6E5352C8363960065FA14 /* FilterButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +26,9 @@
 		31A6E51F2C8343620065FA14 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		31A6E5212C8343620065FA14 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		31A6E5242C8343620065FA14 /* MarsRover.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MarsRover.xcdatamodel; sourceTree = "<group>"; };
+		31A6E52F2C834B8A0065FA14 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		31A6E5322C8362B10065FA14 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		31A6E5352C8363960065FA14 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +65,7 @@
 				31A6E52D2C8349710065FA14 /* Views */,
 				31A6E52C2C8349700065FA14 /* ViewModels */,
 				31A6E52B2C83496E0065FA14 /* Models */,
+				31A6E5312C834BEB0065FA14 /* Services */,
 				31A6E52E2C83498B0065FA14 /* Utilities */,
 				31A6E5232C8343620065FA14 /* MarsRover.xcdatamodeld */,
 				31A6E51C2C8343620065FA14 /* Assets.xcassets */,
@@ -93,6 +100,9 @@
 			isa = PBXGroup;
 			children = (
 				31A6E51A2C8343610065FA14 /* ContentView.swift */,
+				31A6E5342C8363840065FA14 /* Components */,
+				31A6E52F2C834B8A0065FA14 /* HomeView.swift */,
+				31A6E5322C8362B10065FA14 /* HeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -103,6 +113,21 @@
 				31A6E5212C8343620065FA14 /* Persistence.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		31A6E5312C834BEB0065FA14 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		31A6E5342C8363840065FA14 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				31A6E5352C8363960065FA14 /* FilterButton.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,9 +201,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				31A6E5222C8343620065FA14 /* Persistence.swift in Sources */,
+				31A6E5332C8362B10065FA14 /* HeaderView.swift in Sources */,
 				31A6E51B2C8343610065FA14 /* ContentView.swift in Sources */,
 				31A6E5192C8343610065FA14 /* MarsRoverApp.swift in Sources */,
+				31A6E5302C834B8A0065FA14 /* HomeView.swift in Sources */,
 				31A6E5252C8343620065FA14 /* MarsRover.xcdatamodeld in Sources */,
+				31A6E5362C8363960065FA14 /* FilterButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,11 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        let contentView = ContentView()
-            .environment(\.managedObjectContext, persistenceController.container.viewContext)
+        let homeView = HomeView()
+        //        let contentView = ContentView()
+        //            .environment(\.managedObjectContext, persistenceController.container.viewContext)
         
         let window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = UIHostingController(rootView: contentView)
+        window.rootViewController = UIHostingController(rootView: homeView)
         self.window = window
         window.makeKeyAndVisible()
         

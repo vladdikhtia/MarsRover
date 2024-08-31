@@ -7,6 +7,12 @@
 
 import Foundation
 
+//
+//    // converting HTTP to HTTPS
+//    var secureImgSrc: String {
+//        imgSrc.replacingOccurrences(of: "http://", with: "https://")
+//    }
+
 struct PhotoResponseModel: Codable {
     let photos: [Photo]
 }
@@ -85,7 +91,7 @@ let example: PhotoResponseModel = PhotoResponseModel(
                 roverId: 1,
                 fullName: "Front Hazard Avoidance Camera"
             ),
-            imgSrc: "http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/00100/opgs/edr/fcam/FLB_123456789EDR_F0000000FHAZ00323M_.JPG",
+            imgSrc: "https://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/00100/opgs/edr/fcam/FLB_123456789EDR_F0000000FHAZ00323M_.JPG",
             earthDate: "2012-08-07",
             rover: Rover(
                 id: 1,
@@ -110,7 +116,7 @@ let example: PhotoResponseModel = PhotoResponseModel(
                 roverId: 1,
                 fullName: "Mast Camera"
             ),
-            imgSrc: "http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/00500/opgs/edr/fcam/FRB_987654321EDR_F0000001MAST00324M_.JPG",
+            imgSrc: "https://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/00500/opgs/edr/fcam/FRB_987654321EDR_F0000001MAST00324M_.JPG",
             earthDate: "2013-05-15",
             rover: Rover(
                 id: 1,

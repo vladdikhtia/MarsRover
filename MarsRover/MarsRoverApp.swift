@@ -19,7 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        let homeView = HomeView()
+        
+        let roverViewModel = RoverViewModel()
+        let homeView = HomeView(viewModel: roverViewModel)
         //        let contentView = ContentView()
         //            .environment(\.managedObjectContext, persistenceController.container.viewContext)
         

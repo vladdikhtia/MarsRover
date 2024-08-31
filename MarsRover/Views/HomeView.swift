@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    @ObservedObject var viewModel: RoverViewModel
     var body: some View {
         
         NavigationView {

@@ -11,7 +11,7 @@ struct HeaderView: View {
     var body: some View {
         HStack{
             VStack(alignment: .leading){
-                Text("MARS.CAMERA") // finish fonts
+                Text("MARS.CAMERA") // TODO() finish fonts
                     .font(.system(size: 34, weight: .bold))
                     .frame(maxWidth: .infinity, alignment: .leading)
                 

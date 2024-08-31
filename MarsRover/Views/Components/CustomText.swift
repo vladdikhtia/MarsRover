@@ -8,11 +8,20 @@
 import SwiftUI
 
 struct CustomText: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    let typeTitle: String
+    let value: String
+    
+    var body: some View{
+        Text("\(typeTitle): ")
+            .font(.system(size: 16, weight: .regular))
+            .foregroundColor(Color.LayerTwo)
+        
+        + Text(value)
+            .font(.system(size: 17, weight: .bold))
+            .foregroundColor(Color.LayerOne)
     }
 }
 
 #Preview {
-    CustomText()
+    CustomText(typeTitle: "Rover", value: "Curiosity")
 }

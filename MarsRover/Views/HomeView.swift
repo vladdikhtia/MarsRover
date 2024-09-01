@@ -8,37 +8,103 @@
 import SwiftUI
 
 struct HomeView: View {
+    
     @ObservedObject var viewModel: RoverViewModel
+    
+    @State var isDatePickerPresented: Bool = false
+    @State var cameraFilterIsPresented: Bool = false
+    @State var roverFilterIsPresented: Bool = false
     var body: some View {
-        
-        NavigationView {
-            VStack{
-                //header
-                HeaderView()
-                if !viewModel.photos.isEmpty {
-                    ScrollView{ // TODO()add top padding 20
-                        VStack(spacing: 12){
-                            ForEach(viewModel.photos) { photo in
-                                DetailCard(photo: photo)
+        ZStack{
+            NavigationView {
+                VStack{
+                    //header
+                    HeaderView(
+                        selectedDate:  Binding(
+                            get: { viewModel.formattedDateForDisplaying },
+                            set: { newDate in
+                                if let date = DateFormatter.date(from: newDate) {
+                                    viewModel.selectedDate = date
+                                    viewModel.currentDate = newDate
+                                }
+                            }),
+                        isDatePickerPresented: $isDatePickerPresented,
+                        cameraFilterIsPresented: $cameraFilterIsPresented,
+                        roverFilterIsPresented: $roverFilterIsPresented,
+                        currentRover: Binding(get: {
+                            viewModel.currentRover
+                        }, set: { newRover in
+                            viewModel.currentRover = newRover
+                        }),
+                        currentCamera: Binding(get: {
+                            viewModel.currentCamera
+                        }, set: { newCamera in
+                            viewModel.currentCamera = newCamera
+                        })
+                    )
+                    
+                    if !viewModel.photos.isEmpty {
+                        ScrollView{ // TODO()add top padding 20
+                            VStack(spacing: 12){
+                                ForEach(viewModel.photos) { photo in
+                                    DetailCard(photo: photo)
+                                }
                             }
+                            .padding(.top, 12)
+                        }
+                    } else {
+                        if #available(iOS 14.0, *) {
+                            ProgressView("Data is loading...")
+                                .padding(.top, 200)
+                        } else {
+                            Text("Data is loading...")
+                                .font(.system(size: 17, weight: .bold))
+                                .padding(.top, 200)
                         }
                     }
-                } else {
-                    if #available(iOS 14.0, *) {
-                        ProgressView("Data is loading...")
-                            .padding(.top, 200)
-                    } else {
-                        Text("Data is loading...")
-                            .font(.system(size: 17, weight: .bold))
-                            .padding(.top, 200)
+                    
+//                    Button(action: {
+//                        print("Show current date\(viewModel.currentDate)")
+//                        viewModel.fetchData()
+//                    }, label: {
+//                        Text("date")
+//                            .padding()
+//                            .background(Color.green)
+//                    })
+                    
+                    Spacer()
+                    
+                    if roverFilterIsPresented {
+                        FilterSheet(filterTitle: "Rover", filterIsPresented: $roverFilterIsPresented, viewModel: viewModel,
+                            saveAction: {
+                            viewModel.fetchData()
+                            }
+                        )
+                    }
+                    
+                    if cameraFilterIsPresented {
+                        FilterSheet(filterTitle: "Camera", filterIsPresented: $cameraFilterIsPresented, viewModel: viewModel,
+                            saveAction: {
+                            viewModel.fetchData()
+                            }
+                        )
                     }
                 }
-                Spacer()
+                .edgesIgnoringSafeArea(.all)
             }
-            .background(Color.BackgroundOne)
-            .edgesIgnoringSafeArea(.all)
+            
+            if isDatePickerPresented {
+                CustomDatePicker(selectedDate: Binding(
+                    get: { viewModel.selectedDate },
+                    set: { newDate in
+                        viewModel.selectedDate = newDate
+                        viewModel.currentDate = DateFormatter.string(from: newDate)
+                    }), isDatePickerVisible: $isDatePickerPresented, action: viewModel.fetchData
+                )
+            }
         }
     }
+    
 }
 
 #Preview {

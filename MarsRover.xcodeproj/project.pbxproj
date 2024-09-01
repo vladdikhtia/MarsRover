@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		314087A32C84B3D20030CF53 /* CustomDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314087A22C84B3D20030CF53 /* CustomDatePicker.swift */; };
+		314087A52C850B890030CF53 /* FilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314087A42C850B890030CF53 /* FilterSheet.swift */; };
 		31A6E5192C8343610065FA14 /* MarsRoverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A6E5182C8343610065FA14 /* MarsRoverApp.swift */; };
 		31A6E51B2C8343610065FA14 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A6E51A2C8343610065FA14 /* ContentView.swift */; };
 		31A6E51D2C8343620065FA14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31A6E51C2C8343620065FA14 /* Assets.xcassets */; };
@@ -24,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		314087A22C84B3D20030CF53 /* CustomDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePicker.swift; sourceTree = "<group>"; };
+		314087A42C850B890030CF53 /* FilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheet.swift; sourceTree = "<group>"; };
 		31A6E5152C8343610065FA14 /* MarsRover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarsRover.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31A6E5182C8343610065FA14 /* MarsRoverApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarsRoverApp.swift; sourceTree = "<group>"; };
 		31A6E51A2C8343610065FA14 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -141,6 +145,8 @@
 			children = (
 				31A6E5352C8363960065FA14 /* FilterButton.swift */,
 				31A6E53D2C83C3880065FA14 /* CustomText.swift */,
+				314087A22C84B3D20030CF53 /* CustomDatePicker.swift */,
+				314087A42C850B890030CF53 /* FilterSheet.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -220,8 +226,10 @@
 				31A6E5382C8390DB0065FA14 /* RoverViewModel.swift in Sources */,
 				31A6E53C2C83976D0065FA14 /* NetworkManager.swift in Sources */,
 				31A6E53A2C83953E0065FA14 /* PhotoResponseModel.swift in Sources */,
+				314087A52C850B890030CF53 /* FilterSheet.swift in Sources */,
 				31A6E5332C8362B10065FA14 /* HeaderView.swift in Sources */,
 				31A6E51B2C8343610065FA14 /* ContentView.swift in Sources */,
+				314087A32C84B3D20030CF53 /* CustomDatePicker.swift in Sources */,
 				31A6E5192C8343610065FA14 /* MarsRoverApp.swift in Sources */,
 				31A6E53E2C83C3880065FA14 /* CustomText.swift in Sources */,
 				31A6E5302C834B8A0065FA14 /* HomeView.swift in Sources */,

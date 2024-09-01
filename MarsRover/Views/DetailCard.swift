@@ -39,13 +39,25 @@ struct DetailCard: View {
         )
         .padding(.horizontal, 20)
     }
-    private func dateConverter(dateString: String) -> String? {
+    
+    func dateConverter(dateString: String) -> String? {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "yyyy-MM-dd"
         
         guard let date = inputFormatter.date(from: dateString) else {
             return nil
         }
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "MMMM d, yyyy"
+        
+        let formattedDateString = outputFormatter.string(from: date)
+        return formattedDateString
+    }
+    
+    func dateConverter(date: Date) -> String? {
+//        let inputFormatter = DateFormatter()
+//        inputFormatter.dateFormat = "yyyy-MM-dd"
+//
         let outputFormatter = DateFormatter()
         outputFormatter.dateFormat = "MMMM d, yyyy"
         

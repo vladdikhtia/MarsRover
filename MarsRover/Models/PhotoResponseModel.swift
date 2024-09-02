@@ -31,6 +31,10 @@ struct Photo: Codable, Identifiable {
         case earthDate = "earth_date"
         case rover
     }
+
+    var secureImgSrc: String {
+        imgSrc.replacingOccurrences(of: "http://", with: "https://")
+    }
 }
 
 struct Camera: Codable {
@@ -74,7 +78,7 @@ struct Rover: Codable {
 struct RoverCamera: Codable {
     let name: String
     let fullName: String
-
+    
     enum CodingKeys: String, CodingKey {
         case name
         case fullName = "full_name"

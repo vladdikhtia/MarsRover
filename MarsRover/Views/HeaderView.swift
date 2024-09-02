@@ -14,6 +14,7 @@ struct HeaderView: View {
     @Binding var roverFilterIsPresented: Bool
     @Binding var currentRover: MarsRover
     @Binding var currentCamera: MarsCamera
+    var onClick: () -> Void
     
     var body: some View {
         HStack{
@@ -64,7 +65,10 @@ struct HeaderView: View {
                 
                 Spacer()
                 
-                FilterButton(imageName: "addMy", title: "", action: {print("Pressed Save Button")})
+                FilterButton(imageName: "addMy", title: "", action: {
+                    print("Pressed Save Button")
+                    onClick()
+                })
             }
         }
         .foregroundColor(Color.LayerOne)
@@ -102,8 +106,13 @@ struct HeaderView: View {
 }
 
 #Preview {
-    HeaderView(selectedDate: .constant(""), isDatePickerPresented: .constant(true), cameraFilterIsPresented: .constant(false),
-               roverFilterIsPresented: .constant(false),
-               currentRover: .constant(.curiosity),
-               currentCamera: .constant(.fhaz))
+    HeaderView(
+        selectedDate: .constant(""),
+        isDatePickerPresented: .constant(true),
+        cameraFilterIsPresented: .constant(false),
+        roverFilterIsPresented: .constant(false),
+        currentRover: .constant(.curiosity),
+        currentCamera: .constant(.fhaz),
+        onClick: { }
+    )
 }

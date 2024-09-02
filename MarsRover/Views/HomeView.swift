@@ -8,45 +8,46 @@
 import SwiftUI
 
 struct HomeView: View {
-    
-    @ObservedObject var viewModel: RoverViewModel
+    @ObservedObject var roverViewModel: RoverViewModel
+    @ObservedObject var coreDataViewModel: CoreDataViewModel
     
     @State var isDatePickerPresented: Bool = false
     @State var cameraFilterIsPresented: Bool = false
     @State var roverFilterIsPresented: Bool = false
+    
     var body: some View {
-        ZStack{
-            NavigationView {
-                VStack{
+        NavigationView{
+            ZStack{
+                VStack(spacing: 0) {
                     //header
                     HeaderView(
                         selectedDate:  Binding(
-                            get: { viewModel.formattedDateForDisplaying },
+                            get: { roverViewModel.formattedDateForDisplaying },
                             set: { newDate in
                                 if let date = DateFormatter.date(from: newDate) {
-                                    viewModel.selectedDate = date
-                                    viewModel.currentDate = newDate
+                                    roverViewModel.selectedDate = date
+                                    roverViewModel.currentDate = newDate
                                 }
                             }),
                         isDatePickerPresented: $isDatePickerPresented,
                         cameraFilterIsPresented: $cameraFilterIsPresented,
                         roverFilterIsPresented: $roverFilterIsPresented,
                         currentRover: Binding(get: {
-                            viewModel.currentRover
+                            roverViewModel.currentRover
                         }, set: { newRover in
-                            viewModel.currentRover = newRover
+                            roverViewModel.currentRover = newRover
                         }),
                         currentCamera: Binding(get: {
-                            viewModel.currentCamera
+                            roverViewModel.currentCamera
                         }, set: { newCamera in
-                            viewModel.currentCamera = newCamera
-                        })
+                            roverViewModel.currentCamera = newCamera
+                        }),
+                        onClick: add
                     )
-                    
-                    if !viewModel.photos.isEmpty {
-                        ScrollView{ // TODO()add top padding 20
+                    if !roverViewModel.photos.isEmpty {
+                        ScrollView{
                             VStack(spacing: 12){
-                                ForEach(viewModel.photos) { photo in
+                                ForEach(roverViewModel.photos) { photo in
                                     DetailCard(photo: photo)
                                 }
                             }
@@ -63,52 +64,65 @@ struct HomeView: View {
                         }
                     }
                     
-//                    Button(action: {
-//                        print("Show current date\(viewModel.currentDate)")
-//                        viewModel.fetchData()
-//                    }, label: {
-//                        Text("date")
-//                            .padding()
-//                            .background(Color.green)
-//                    })
-                    
                     Spacer()
                     
                     if roverFilterIsPresented {
-                        FilterSheet(filterTitle: "Rover", filterIsPresented: $roverFilterIsPresented, viewModel: viewModel,
-                            saveAction: {
-                            viewModel.fetchData()
-                            }
+                        FilterSheet(filterTitle: "Rover", filterIsPresented: $roverFilterIsPresented, viewModel: roverViewModel,
+                                    saveAction: {
+                            roverViewModel.fetchData()
+                        }
                         )
                     }
                     
                     if cameraFilterIsPresented {
-                        FilterSheet(filterTitle: "Camera", filterIsPresented: $cameraFilterIsPresented, viewModel: viewModel,
-                            saveAction: {
-                            viewModel.fetchData()
-                            }
+                        FilterSheet(filterTitle: "Camera",
+                                    filterIsPresented: $cameraFilterIsPresented,
+                                    viewModel: roverViewModel,
+                                    saveAction: {
+                            roverViewModel.fetchData()
+                        }
                         )
                     }
                 }
-                .edgesIgnoringSafeArea(.all)
+                
+                if isDatePickerPresented {
+                    CustomDatePicker(selectedDate: Binding(
+                        get: { roverViewModel.selectedDate },
+                        set: { newDate in
+                            roverViewModel.selectedDate = newDate
+                            roverViewModel.currentDate = DateFormatter.string(from: newDate)
+                        }), isDatePickerVisible: $isDatePickerPresented, action: roverViewModel.fetchData
+                    )
+                }
+                
+                if !isDatePickerPresented && !cameraFilterIsPresented && !roverFilterIsPresented {
+                    NavigationLink{
+                        HistoryView(viewModel: coreDataViewModel)
+                            .navigationBarBackButtonHidden(true)
+                    } label: {
+                        FloatingButton()
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                    .padding([.bottom, .trailing], 20)
+                }
             }
-            
-            if isDatePickerPresented {
-                CustomDatePicker(selectedDate: Binding(
-                    get: { viewModel.selectedDate },
-                    set: { newDate in
-                        viewModel.selectedDate = newDate
-                        viewModel.currentDate = DateFormatter.string(from: newDate)
-                    }), isDatePickerVisible: $isDatePickerPresented, action: viewModel.fetchData
-                )
-            }
+            .edgesIgnoringSafeArea(.all)
+
         }
+    }
+    private func add() {
+        coreDataViewModel.addFilter(
+            roverName: roverViewModel.currentRover.rawValue,
+            cameraName: roverViewModel.currentCamera.description,
+            date: roverViewModel.currentDate
+        )
     }
     
 }
 
 #Preview {
-    HomeView(viewModel: RoverViewModel())
+    HomeView(roverViewModel: RoverViewModel(), coreDataViewModel: CoreDataViewModel())
+    
 }
 
 
@@ -120,29 +134,3 @@ extension Color {
     static let SystemTwo = Color("SystemTwo")
     static let SystemThree = Color("SystemThree")
 }
-
-
-
-//if #available(iOS 15.0, *) {
-//                                        AsyncImage(
-//                                            url: URL(string: photo.imgSrc)) { image in
-//                                                image
-//                                                    .resizable()
-//                                                    .scaledToFit()
-//                                                    .frame(width: 130, height: 130)
-//                                                    .clipShape(.rect(cornerRadius: 20))
-//                                                    .padding(10)
-//                                            } placeholder: {
-//                                                Rectangle()
-//                                                    .fill(Color.gray.opacity(0.2))
-//                                                    .frame(width: 130, height: 130)
-//                                                    .clipShape(RoundedRectangle(cornerRadius: 20))
-//                                                    .padding(10)
-//                                            }
-//                                    } else {
-//                                        Rectangle() // TODO() make it works with ios 13
-//                                            .fill(Color.red)
-//                                            .frame(width: 130, height: 130)
-//                                            .clipShape(.rect(cornerRadius: 20))
-//                                            .padding(10)
-//                                    }

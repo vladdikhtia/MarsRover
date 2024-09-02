@@ -21,8 +21,7 @@ struct DetailCard: View {
             
             Spacer()
             
-            Rectangle() // TODO() make it works with ios 13
-                .fill(Color.red)
+            AsyncImageView(url: photo.secureImgSrc)
                 .frame(width: 130, height: 130)
                 .clipShape(.rect(cornerRadius: 20))
                 .padding(10)

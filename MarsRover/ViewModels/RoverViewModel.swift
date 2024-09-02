@@ -31,6 +31,7 @@ class RoverViewModel : ObservableObject {
         return DateFormatter.string(from: selectedDate)
     }
     init() {
+        self.selectedDate = DateFormatter.date(from: currentDate) ?? Date()
         fetchData()
     }
     

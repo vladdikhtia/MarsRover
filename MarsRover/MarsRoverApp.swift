@@ -9,11 +9,12 @@ import SwiftUI
 import UIKit
 
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    let persistenceController = PersistenceController.shared
+//    let persistenceController = PersistenceController.shared
     
     func application(
         _ application: UIApplication,
@@ -21,7 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         
         let roverViewModel = RoverViewModel()
-        let homeView = HomeView(viewModel: roverViewModel)
+        let coreDataViewModel = CoreDataViewModel()
+        let homeView = HomeView(roverViewModel: roverViewModel, coreDataViewModel: coreDataViewModel)
         //        let contentView = ContentView()
         //            .environment(\.managedObjectContext, persistenceController.container.viewContext)
         

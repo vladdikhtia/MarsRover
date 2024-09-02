@@ -20,13 +20,7 @@ class NetworkManager {
     static let instance = NetworkManager() // singleton
     
     private init(){
-        getData()
     }
-//    https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?earth_date=2015-6-3&api_key=DEMO_KEY - new
-    func getData() {
-        guard let url = URL(string: "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&page=1&api_key=DEMO_KEY") else {
-            print("DEBUG: Invalid URL")
-            return
     
     private func createURLComponents(rover: String, date: String, camera: MarsCamera, page: Int) -> URLComponents {
         var urlComponents = URLComponents()
@@ -34,12 +28,6 @@ class NetworkManager {
         urlComponents.host = "api.nasa.gov"
         urlComponents.path = "/mars-photos/api/v1/rovers/\(rover)/photos"
         
-//        urlComponents.queryItems = [
-//            URLQueryItem(name: "earth_date", value: date),
-////            URLQueryItem(name: "camera", value: camera),
-//            URLQueryItem(name: "page", value: "\(page)"),
-//            URLQueryItem(name: "api_key", value: apiKey)
-//        ]
         var queryItems = [
                 URLQueryItem(name: "earth_date", value: date),
                 URLQueryItem(name: "page", value: "\(page)"),
@@ -82,7 +70,6 @@ class NetworkManager {
             }
             .store(in: &cancellables)
     }
-    
     
     private func validatingOutput(output: URLSession.DataTaskPublisher.Output) throws -> Data {
         guard let response = output.response as? HTTPURLResponse else {

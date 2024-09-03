@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DetailCard: View {
     let photo: Photo
+    let onClick: (UIImage?) -> Void
     
     var body: some View {
         HStack{
@@ -25,6 +26,12 @@ struct DetailCard: View {
                 .frame(width: 130, height: 130)
                 .clipShape(.rect(cornerRadius: 20))
                 .padding(10)
+                .onTapGesture {
+                    Task {
+                        let image = await loadImageAsyncAwait(urlString: photo.secureImgSrc)
+                        onClick(image)
+                    }
+                }
         }
         .frame(height: 150)
         .frame(maxWidth: .infinity)
@@ -54,9 +61,9 @@ struct DetailCard: View {
     }
     
     func dateConverter(date: Date) -> String? {
-//        let inputFormatter = DateFormatter()
-//        inputFormatter.dateFormat = "yyyy-MM-dd"
-//
+        //        let inputFormatter = DateFormatter()
+        //        inputFormatter.dateFormat = "yyyy-MM-dd"
+        //
         let outputFormatter = DateFormatter()
         outputFormatter.dateFormat = "MMMM d, yyyy"
         

@@ -63,8 +63,23 @@ struct DetailCard: View {
         let formattedDateString = outputFormatter.string(from: date)
         return formattedDateString
     }
+    
+    private func loadImageAsyncAwait(urlString: String) async -> UIImage? {
+        guard let url = URL(string: urlString) else {
+            return nil
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            return UIImage(data: data)
+        } catch  {
+            print("Failed to load image: \(error.localizedDescription)")
+            return nil
+        }
+    }
+
 }
 
 #Preview {
-    DetailCard(photo: example.photos[0])
+    DetailCard(photo: example.photos[0], onClick: {_ in })
 }

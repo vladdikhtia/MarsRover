@@ -12,7 +12,6 @@ struct AsyncImageView: View {
     private let placeholder: Image
     
     init(url: String, placeholder: Image = Image(systemName: "photo")) {
-        
         _imageLoader = ObservedObject(wrappedValue: AsyncImageLoader())
         self.placeholder = placeholder
         
@@ -25,7 +24,7 @@ struct AsyncImageView: View {
         if let uiImage = imageLoader.image {
             Image(uiImage: uiImage)
                 .resizable()
-                .aspectRatio(contentMode: .fit)
+                .scaledToFill()
         } else {
             placeholder
                 .resizable()

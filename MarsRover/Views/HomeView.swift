@@ -14,6 +14,10 @@ struct HomeView: View {
     @State var isDatePickerPresented: Bool = false
     @State var cameraFilterIsPresented: Bool = false
     @State var roverFilterIsPresented: Bool = false
+    @State private var showAddFilterAlert: Bool = false
+    
+    @State private var isImageViewerPresented = false
+    @State private var selectedImage: UIImage? = nil
     
     var body: some View {
         NavigationView{
@@ -42,13 +46,25 @@ struct HomeView: View {
                         }, set: { newCamera in
                             roverViewModel.currentCamera = newCamera
                         }),
-                        onClick: add
+                        onClick: { showAddFilterAlert = true }
                     )
                     if !roverViewModel.photos.isEmpty {
                         ScrollView{
                             VStack(spacing: 12){
-                                ForEach(roverViewModel.photos) { photo in
-                                    DetailCard(photo: photo)
+                                ForEach(roverViewModel.photos, id: \.id) { photo in
+                                    DetailCard(photo: photo) { image in
+                                        if let image = image {
+                                            selectedImage = image
+                                            isImageViewerPresented = true
+                                        }
+                                    }
+                                    
+//                                    if photo = roverViewModel.appPhotos.last {
+//                                        Text("Loading data...")
+//                                            .onAppear {
+//                                                roverViewModel.fetchData()
+//                                            }
+//                                    }
                                 }
                             }
                             .padding(.top, 12)
@@ -84,6 +100,12 @@ struct HomeView: View {
                         )
                     }
                 }
+                if isImageViewerPresented,
+                   let image = selectedImage {
+                    FullScreenImageView(image: image, isImageShown: $isImageViewerPresented)
+                        .transition(.opacity)
+                        .zIndex(1)
+                }
                 
                 if isDatePickerPresented {
                     CustomDatePicker(selectedDate: Binding(
@@ -97,7 +119,7 @@ struct HomeView: View {
                 
                 if !isDatePickerPresented && !cameraFilterIsPresented && !roverFilterIsPresented {
                     NavigationLink{
-                        HistoryView(viewModel: coreDataViewModel)
+                        HistoryView(roverViewModel: roverViewModel, coreDataViewModel: coreDataViewModel)
                             .navigationBarBackButtonHidden(true)
                     } label: {
                         FloatingButton()
@@ -106,18 +128,28 @@ struct HomeView: View {
                     .padding([.bottom, .trailing], 20)
                 }
             }
+            .animation(.easeInOut, value: isImageViewerPresented)
+            .alert(isPresented: $showAddFilterAlert,
+                   content: {
+                Alert(
+                    title: Text("Save Filters"),
+                    message: Text("The current filters and the date you have chosen can be saved to the filter history.")
+                    ,
+                    primaryButton: .default(Text("Save"))
+                    {
+                        coreDataViewModel.addFilter(
+                            roverName: roverViewModel.currentRover.rawValue,
+                            cameraName: roverViewModel.currentCamera.rawValue,
+                            date: roverViewModel.currentDate
+                        )
+                        print("Save pressed!")
+                    },
+                    secondaryButton: .cancel(Text("Cancel"))
+                )
+            })
             .edgesIgnoringSafeArea(.all)
-
         }
     }
-    private func add() {
-        coreDataViewModel.addFilter(
-            roverName: roverViewModel.currentRover.rawValue,
-            cameraName: roverViewModel.currentCamera.description,
-            date: roverViewModel.currentDate
-        )
-    }
-    
 }
 
 #Preview {

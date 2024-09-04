@@ -48,28 +48,32 @@ struct HomeView: View {
                         }),
                         onClick: { showAddFilterAlert = true }
                     )
-                    if !roverViewModel.photos.isEmpty {
-                        ScrollView{
-                            VStack(spacing: 12){
-                                ForEach(roverViewModel.photos, id: \.id) { photo in
-                                    DetailCard(photo: photo) { image in
-                                        if let image = image {
-                                            selectedImage = image
-                                            isImageViewerPresented = true
-                                        }
-                                    }
-                                    
-//                                    if photo = roverViewModel.appPhotos.last {
-//                                        Text("Loading data...")
-//                                            .onAppear {
-//                                                roverViewModel.fetchData()
-//                                            }
-//                                    }
-                                }
-                            }
-                            .padding(.top, 12)
-                        }
-                    } else {
+                    
+                    //Trying to do pagination with async await
+                    /*
+                     if let photos = roverViewModel.photos {
+                     ScrollView{
+                     VStack(spacing: 12){
+                     ForEach(photos, id: \.id) { photo in
+                     DetailCard(photo: photo) { image in
+                     if let image = image {
+                     selectedImage = image
+                     isImageViewerPresented = true
+                     }
+                     }
+                     
+                     if photo.id == photos.last?.id {
+                     Text("Loading data...")
+                     .onAppear{
+                     roverViewModel.loadMorePhotos()
+                     }
+                     }
+                     }
+                     
+                     }
+                     .padding(.top, 12)
+                     }*/
+                    if roverViewModel.networkManager.isLoading {
                         if #available(iOS 14.0, *) {
                             ProgressView("Data is loading...")
                                 .padding(.top, 200)
@@ -77,6 +81,28 @@ struct HomeView: View {
                             Text("Data is loading...")
                                 .font(.system(size: 17, weight: .bold))
                                 .padding(.top, 200)
+                        }
+                    } else{
+                        if roverViewModel.photos.isEmpty {
+                            Text("Make another filter")
+                                .font(.system(size: 17, weight: .bold))
+                                .padding(.top, 200)
+                        } else {
+                            ScrollView{
+                                VStack(spacing: 12){
+                                    ForEach(roverViewModel.photos, id: \.id) { photo in
+                                        DetailCard(photo: photo) { image in
+                                            if let image = image {
+                                                selectedImage = image
+                                                isImageViewerPresented = true
+                                            }
+                                        }
+                                    }
+                                }
+                                .padding(.top, 12)
+                                .background(Color.BackgroundOne)
+                            }
+                            .edgesIgnoringSafeArea(.all)
                         }
                     }
                     
@@ -149,20 +175,11 @@ struct HomeView: View {
             })
             .edgesIgnoringSafeArea(.all)
         }
+        .preferredColorScheme(.light)
     }
 }
 
 #Preview {
     HomeView(roverViewModel: RoverViewModel(), coreDataViewModel: CoreDataViewModel())
     
-}
-
-
-extension Color {
-    static let BackgroundOne = Color("BackgroundOne")
-    static let AccentOne = Color("AccentOne")
-    static let LayerOne = Color("LayerOne")
-    static let LayerTwo = Color("LayerTwo")
-    static let SystemTwo = Color("SystemTwo")
-    static let SystemThree = Color("SystemThree")
 }

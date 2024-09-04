@@ -56,6 +56,4 @@ class CoreDataViewModel: ObservableObject {
         fetchFilters()
         print("Delete")
     }
-    
-    //update
 }

@@ -7,17 +7,13 @@
 
 import Foundation
 
-//
-//    // converting HTTP to HTTPS
-//    var secureImgSrc: String {
-//        imgSrc.replacingOccurrences(of: "http://", with: "https://")
-//    }
 
 struct PhotoResponseModel: Codable {
     let photos: [Photo]
 }
 
-struct Photo: Codable, Identifiable {
+struct Photo: Codable, Identifiable, Equatable {
+    
     let id: Int
     let camera: Camera
     let imgSrc: String
@@ -34,6 +30,12 @@ struct Photo: Codable, Identifiable {
 
     var secureImgSrc: String {
         imgSrc.replacingOccurrences(of: "http://", with: "https://")
+    }
+    
+    static func == (lhs: Photo, rhs: Photo) -> Bool {
+        return lhs.id == rhs.id &&
+        lhs.imgSrc == rhs.imgSrc &&
+        lhs.earthDate == rhs.earthDate
     }
 }
 

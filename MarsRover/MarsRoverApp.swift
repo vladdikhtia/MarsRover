@@ -14,7 +14,6 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-//    let persistenceController = PersistenceController.shared
     
     func application(
         _ application: UIApplication,
@@ -24,8 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let roverViewModel = RoverViewModel()
         let coreDataViewModel = CoreDataViewModel()
         let homeView = HomeView(roverViewModel: roverViewModel, coreDataViewModel: coreDataViewModel)
-        //        let contentView = ContentView()
-        //            .environment(\.managedObjectContext, persistenceController.container.viewContext)
         
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = UIHostingController(rootView: homeView)

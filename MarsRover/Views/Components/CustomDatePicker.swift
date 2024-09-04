@@ -81,7 +81,6 @@ struct CustomDatePicker: View {
                 y: 3
             )
         }
-        
     }
 }
 

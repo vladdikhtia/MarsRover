@@ -16,7 +16,7 @@ struct AsyncImageView: View {
         self.placeholder = placeholder
         
         if let imageURL = URL(string: url) {
-            _imageLoader.wrappedValue.loadImage(from: imageURL)
+            _imageLoader.wrappedValue.loadImageAsyncAwait(from: imageURL)
         }
     }
     

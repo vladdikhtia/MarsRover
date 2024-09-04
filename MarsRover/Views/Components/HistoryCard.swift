@@ -24,7 +24,7 @@ struct HistoryCard: View {
             VStack(alignment: .leading, spacing: 6){
                 CustomText(typeTitle: "Rover", value: filter.rover ?? "Curiosity")
                 CustomText(typeTitle: "Camera", value: filter.camera ?? "Front Hazard Avoidance Camera")
-                CustomText(typeTitle: "Date", value: dateConverter(dateString: filter.date ?? "June 6, 2019"))
+                CustomText(typeTitle: "Date", value: DateFormatter.formattedDate(from: filter.date ?? "June 6, 2019") ?? "")
             }
         }
         .padding(16)
@@ -37,19 +37,6 @@ struct HistoryCard: View {
             x: 0,
             y: 3
         )
-    }
-    func dateConverter(dateString: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "yyyy-MM-dd"
-        
-        guard let date = inputFormatter.date(from: dateString) else {
-            return ""
-        }
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "MMMM d, yyyy"
-        
-        let formattedDateString = outputFormatter.string(from: date)
-        return formattedDateString
     }
 }
 

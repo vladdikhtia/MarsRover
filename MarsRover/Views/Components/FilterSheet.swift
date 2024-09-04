@@ -12,12 +12,11 @@ struct FilterSheet: View {
     
     @Binding var filterIsPresented: Bool
     @ObservedObject var viewModel: RoverViewModel
-//    let closeAction: () -> Void
     let saveAction: () -> Void
     
     @State private var tempCameraSelection: MarsCamera = .all
     @State private var tempRoverSelection: MarsRover = .curiosity
-
+    
     var body: some View {
         VStack(spacing: 10) {
             HStack{
@@ -25,7 +24,6 @@ struct FilterSheet: View {
                     withAnimation {
                         print("Pressed close")
                         filterIsPresented = false
-//                        closeAction()
                     }
                 }, label: {
                     Image("closeDark")
@@ -57,11 +55,6 @@ struct FilterSheet: View {
                 Picker(
                     "",
                     selection: $tempCameraSelection
-//                    selection: Binding(get: {
-//                        viewModel.currentCamera
-//                    }, set: { newCamera in
-//                        viewModel.currentCamera = newCamera
-//                    })
                 ) {
                     ForEach(MarsCamera.allCases, id: \.self) { camera in
                         Text(camera.description)
@@ -76,11 +69,6 @@ struct FilterSheet: View {
                 Picker(
                     "",
                     selection: $tempRoverSelection
-//                    selection: Binding(get: {
-//                        viewModel.currentRover
-//                    }, set: { newRover in
-//                        viewModel.currentRover = newRover
-//                    })
                 ) {
                     ForEach(MarsRover.allCases, id: \.self) { rover in
                         Text(rover.path)
@@ -93,27 +81,27 @@ struct FilterSheet: View {
             }
         }
         .background(Color.BackgroundOne)
-        .frame(height: 306)
         .clipShape(.rect(cornerRadius: 50))
+        .frame(height: 306)
         .shadow(
             color: Color.LayerOne.opacity(0.1),
             radius: 12,
             x: 0,
-            y: -12
+            y: 3
         )
         .transition(.move(edge: .bottom))
         .animation(.default)
     }
     
     private func updateSelection() {
-            if filterTitle == "Camera" {
-                viewModel.currentCamera = tempCameraSelection
-            } else if filterTitle == "Rover" {
-                viewModel.currentRover = tempRoverSelection
-            }
+        if filterTitle == "Camera" {
+            viewModel.currentCamera = tempCameraSelection
+        } else if filterTitle == "Rover" {
+            viewModel.currentRover = tempRoverSelection
         }
+    }
 }
 
 #Preview {
-    FilterSheet(filterTitle: "Camera", filterIsPresented: .constant(true), viewModel: RoverViewModel(),/*, closeAction: {},*/ saveAction: {})
+    FilterSheet(filterTitle: "Camera", filterIsPresented: .constant(true), viewModel: RoverViewModel(), saveAction: {})
 }

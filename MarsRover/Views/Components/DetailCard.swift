@@ -16,7 +16,7 @@ struct DetailCard: View {
             VStack(alignment: .leading, spacing: 15){
                 CustomText(typeTitle: "Rover", value: photo.rover.name)
                 CustomText(typeTitle: "Camera", value: photo.camera.fullName)
-                CustomText(typeTitle: "Date", value: dateConverter(dateString:photo.earthDate) ?? "")
+                CustomText(typeTitle: "Date", value: DateFormatter.formattedDate(from:photo.earthDate) ?? "")
             }
             .padding(.leading, 16)
             
@@ -44,31 +44,6 @@ struct DetailCard: View {
             y: 3
         )
         .padding(.horizontal, 20)
-    }
-    
-    func dateConverter(dateString: String) -> String? {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "yyyy-MM-dd"
-        
-        guard let date = inputFormatter.date(from: dateString) else {
-            return nil
-        }
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "MMMM d, yyyy"
-        
-        let formattedDateString = outputFormatter.string(from: date)
-        return formattedDateString
-    }
-    
-    func dateConverter(date: Date) -> String? {
-        //        let inputFormatter = DateFormatter()
-        //        inputFormatter.dateFormat = "yyyy-MM-dd"
-        //
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "MMMM d, yyyy"
-        
-        let formattedDateString = outputFormatter.string(from: date)
-        return formattedDateString
     }
     
     private func loadImageAsyncAwait(urlString: String) async -> UIImage? {

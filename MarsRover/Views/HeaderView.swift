@@ -72,22 +72,11 @@ struct HeaderView: View {
             }
         }
         .foregroundColor(Color.LayerOne)
-        .padding(.top, 54) // remove if Iphone with TouchID
+        .padding(.top, 54)
         .padding(.vertical)
         .padding(.horizontal, 20)
         .background(Color.accentOne)
         .frame(height: 202)
-    }
-    
-    func dateConverter(date: Date) -> String? {
-        //        let inputFormatter = DateFormatter()
-        //        inputFormatter.dateFormat = "yyyy-MM-dd"
-        //
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "MMMM d, yyyy"
-        
-        let formattedDateString = outputFormatter.string(from: date)
-        return formattedDateString
     }
     
     func dateConverter(dateString: String) -> String? {

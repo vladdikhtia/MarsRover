@@ -96,6 +96,7 @@ struct HistoryView: View {
             )
         }
         .edgesIgnoringSafeArea(.all)
+        .preferredColorScheme(.light)
     }
 }
 

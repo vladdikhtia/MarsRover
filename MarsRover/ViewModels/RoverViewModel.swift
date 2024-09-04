@@ -12,6 +12,9 @@ class RoverViewModel : ObservableObject {
     @Published var photos: [Photo] = []
     var cancellable = Set<AnyCancellable>()
     @Published var currentRover: MarsRover = .curiosity
+    @Published var currentCamera: MarsCamera = .all
+    @Published var currentPage: Int = 1
+    @Published var selectedDate: Date = Date()
     @Published var currentDate: String = "2019-6-6" {
         didSet {
             if let newDate = DateFormatter.date(from: currentDate) {
@@ -19,14 +22,9 @@ class RoverViewModel : ObservableObject {
             }
         }
     }
-    @Published var currentCamera: MarsCamera = .all
-    @Published var currentPage: Int = 1
-    
-    @Published var selectedDate: Date = Date()
-    
+        
     let networkManager = NetworkManager.instance
-    
-    
+        
     var formattedDateForDisplaying: String {
         return DateFormatter.string(from: selectedDate)
     }
@@ -65,20 +63,67 @@ class RoverViewModel : ObservableObject {
         currentCamera = newCamera
         fetchData()
     }
+    
+    // Trying to make pagination with async await
+    /*
+     func fetchData() {
+     Task{
+     do {
+     self.photos = try await networkManager.getDataAsyncAwait(rover: currentRover.path, date: currentDate, camera: currentCamera, page: currentPage)
+     } catch {
+     print("Error occurred: \(error.localizedDescription)")
+     }
+     }
+     
+     }
+     
+     func loadMorePhotos() {
+     currentPage += 1
+     Task{
+     do{
+     let tempPhotos = try await networkManager.getDataAsyncAwait(rover: currentRover.path, date: currentDate, camera: currentCamera, page: currentPage)
+     self.photos?.append(contentsOf: tempPhotos)
+     print("Loaded new photos!")
+     } catch {
+     print("Error occurred during loading more data: \(error.localizedDescription)")
+     }
+     }
+     }*/
+    
+    
+    // Trying to make pagination with combine
+    /*func loadMorePhotos() {
+     guard !isLoading else {
+     print("Loading")
+     return
+     }
+     isLoading = true
+     
+     var tempPhotos: [Photo] = []
+     currentPage += 1
+     getDataFromApi()
+     
+     networkManager.$returnedPhotos
+     .sink { [weak self] returnedPhotos in
+     guard let self = self else { return }
+     
+     tempPhotos = returnedPhotos.filter { photo in
+     !self.appPhotos.contains { $0.id == photo.id }
+     }
+     
+     self.appPhotos.append(contentsOf: tempPhotos)
+     self.isLoading = false
+     print("Loaded more photos")
+     }
+     .store(in: &cancellable)
+     }
+     func fetchData() {
+     fetchDataForTempPhotos()
+     print("TempPhotos: \(tempPhotos)")
+     self.appPhotos = tempPhotos
+     print("AppPhotos: \(appPhotos)")
+     
+     }*/
 }
 
-extension DateFormatter {
-    static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter
-    }()
-    
-    static func date(from string: String) -> Date? {
-        return dateFormatter.date(from: string)
-    }
-    
-    static func string(from date: Date) -> String {
-        return dateFormatter.string(from: date)
-    }
-}
+
